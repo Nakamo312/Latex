@@ -1,0 +1,168 @@
+\documentclass{beamer}
+\usetheme{Frankfurt}
+\usecolortheme{default}
+\title[Learning Personal Tastes in  Choosing Fashion Outfits]{Learning Personal Tastes in  Choosing Fashion Outfits}
+\author{Shekhmatov Viktor Aleksandrovich, Arsen Suleimanian Vladimirovich
+}
+\institute{Group 6113-1005003D}
+\date{29.05.2023}
+\begin{document}
+
+\begin{frame}[t]
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Contents}
+\begin{itemize}
+\item Abstract
+\item Introductions
+\item Proposed Metodology
+    \begin{itemize}
+    \item Fashion Outfit Preference Prediction Model
+    \item Fashion Outfit Negative Sampling
+    \end{itemize}
+\item Discussion
+\item Conclussion
+
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Abstract}
+ With the emergence of fashion recommendation, many
+researchers have attempted to recommend fashion items
+that fit consumers’ tastes. 
+In this paper, we propose a neural network that learns one’s
+fashion taste and predicts whether an individual likes a
+fashion outfit. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Introduction}
+\begin{block}{}
+\alert {First} of all, it is more meaningful to recommend individuals with a set of items that make a fashion outfit, rather than individual items. 
+
+\end{block}
+
+\begin{block}{}
+\alert {Secondly}, many data sources for learning fashion tastes from consist of extremely sparse connections between individuals and the fashion outfits they
+liked/created/purchased, which lead to data sparsity problem.
+
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Proposed Methodology}
+
+\begin{enumerate}
+\item Fashion Outfit Preference Prediction Model
+\item Fashion Outfit Negative Sampling
+
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Fashion Outfit Preference Prediction Model}
+
+\begin{columns}
+\column{.7\textwidth}
+\begin{figure}[h]
+
+\centering
+
+\includegraphics[width=1\linewidth]{Рисунок1.png}
+
+\caption{Fashion outfit recommendation neural network model.}
+
+\label{fig:mpr}
+
+\end{figure}
+
+\column{.3\textwidth}
+\uncover<1->{\begin{block}{1}
+\tiny We encode $u$ into an one-hot encoding vector with dimension $|U|$ as $xu$.
+\end{block}}
+\uncover<2->{\begin{block}{2}
+\tiny  Next, we concatenate h1s and h1u to get h2. h2 is then passed through another FC layer with weights W23 to generate h3.
+\end{block}}
+\uncover<3->{\begin{block}{3}
+\tiny  Afterwards, h3 is passed through another FC layer with weights W3y and the output of this FC layer is input to a softmax layer.
+\end{block}}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Fashion Outfit Preference Prediction Model}
+\begin{block}{}
+\begin{columns}
+\column{.5\textwidth}
+Note that this model is a binary classifier, and all of the activation functions are relu. y can then be expressed as follows.
+\column{.3\textwidth}
+\[
+    y = softmax(h_3*W_{3y})
+\]
+\end{columns}
+\end{block}
+
+\begin{block}{}
+\begin{columns}
+\column{.5\textwidth}
+The objective of the model is to minimize the loss:
+\column{.3\textwidth}
+\[
+    L(\theta) = \sum\limits_{i}^n(y_i - y_j)^2
+\]
+\end{columns}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Fashion Outfit Negative Sampling}
+\begin{center}
+\begin{table}
+\caption{Model performance. }\label{tab:1}%
+\begin{tabular}{|c|c|c|}
+ \hline
+{Metric} & {Random} & {Different}
+\\ \hline
+{loss} & {2.025} & {0.580}
+\\ \hline
+{accuracy} & {0.580} & {0.718}
+\\ \hline
+{precision} & {0.523} & {0.758}
+\\ \hline
+{recall} & {0.718} & {0.642}
+\\ \hline
+{f1} & {0.383} & {0.695}
+\\ \hline
+\end{tabular}
+\end{table}
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Discussion
+}
+We compare the performance of the model using two negative sampling approaches: random sampling and λ-different sampling. The results are shown in Table 1. As shown, the λ-different negative sampling leads the model to better performance compared to when sampling random negative samples.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion
+}
+We found that using fashion outfit images as a whole is very informative for the network which eliminates the need to carefully detecting and segmenting every single item in the outfit. Our preliminary results show that our proposed approach can accurately predict whether an individual likes a fashion outfit. 
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{}
+\Huge \alert {Thank you for your attention}
+\end{frame}
+\end{document}
