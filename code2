@@ -1,0 +1,141 @@
+
+%% Class options are described above.
+\documentclass[subscriptcorrection,upint,varvw,barcolor=Goldenrod3,mathalfa=cal=euler,balance,hyphenate,french,pdf-a]{asmejour} %
+
+\usepackage{float}
+%%%%  pdf metadata  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\hypersetup{%
+	pdfauthor={John H. Lienhard},                       		   	% <=== change to YOUR name[s]!
+	pdftitle={ASME Journal Paper LaTeX Template},                  	% <=== change to YOUR pdf file title
+	pdfkeywords={ASME journal paper, LaTeX template, BibTeX style, asmejour class},% <=== change to YOUR pdf keywords
+	pdfsubject = {Describes the asmejour LaTeX template},			% <=== change to YOUR subject
+%	pdfurl={https://ctan.org/pkg/asmejour},% may delete
+	pdflicenseurl={https://ctan.org/pkg/asmejour},% may delete
+}
+
+%%%%  Journal name and optional copyright year %%%%%%%%%%%%%%
+
+%% Omit "Journal of". If Journal Name is quite long, use \\ to insert a line break
+\JourName{Heat Transfer}%<=== change to the name of your journal
+
+%% The default copyright year is the current year
+%% \PaperYear{2022} sets 2022; and \PaperYear{} omits the year entirely.
+                   
+%%%%  end of preamble  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Change to your author name[s] and addresses, in the desired order of authors.
+% First name, middle initial, last name
+% Use title case (upper and lower case letters)
+% Note usage below for corresponding author.
+
+
+% To label one or more corresponding authors put "Name\CorrespondingAuthor". No space after "Name".
+% An optional argument can be added if email is not in address block as
+%      "Name\CorrespondingAuthor{write@to.me}"
+% Can also include multiple emails and use the command more than once for multiple corresponding authors,
+%      "Name\CorrespondingAuthor{write@to.him, write@to.her}"
+
+
+%%% Change to your paper title. Can insert line breaks if you wish (otherwise breaks are selected automatically).
+\title{Fashion Outfiy Complementary Item Retrieval}
+
+
+
+   
+
+
+
+\date{Version \versionno, \today}%% You can modify this information as desired. 
+							%% Putting \date{} will suppress any date.  
+							%% If this command is omitted, date defaults to \today
+							%% This command must come somewhere before \maketitle
+
+\maketitle %% This command creates the author/title/abstract block. Essential!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%  End of fields to be completed. Now write! %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{ABSRTRUCT}
+Complementary  fashion item recommendation is critical for fashion outfit completion. Existing methods mainly focus on outfit compatibility prediction but not in a retrieval setting. We propose a new framework for outfit complementary item retrieval. Specifically, a category-based subspace attention network is presented, which is a scalable approach for learning the subspace attentions. In addition, we introduce an outfit ranking loss that better models the item relationships of an entire outfit. We evaluate our method on the outfit compatibility, FITB and new retrieval tasks. Experimental results demonstrate that our approach outperforms state-of-the-art methods in both compatibility prediction and complementary item retrieval. 
+
+\section{LISTS}
+To summarize, the main technical contributions of our work are:
+\begin{enumerate}
+  \item We propose a category-based attention selection mechanism that only depends on the item categories. This enables us to conduct scalable indexing and searching for missing items in an outfit.
+
+  \item We propose a new outfit ranking loss function that operates on entire outfits. This improves the accuracy in compatibility prediction as well as retrieval.
+
+ \end{enumerate} 
+Contributions of this paper are: 
+\begin{itemize}
+  \item We leverage fashion data from Polyvore and propose a neural network model that, given a fashion outfit and a user, predicts whether the user likes the fashion outfit. The learned model can be used to further recommend fashion outfits to individuals based on the learned personalized outfit scores. 
+  \item 	We propose a new way of negative sampling that reflects well the fashion outfits unlikely to be liked by an individual. Our proposed scheme encounters the data sparsity issue and is shown to significantly improve the model’s performance compared to randomly selecting negative samples.
+
+ \end{itemize} 
+\section{IMAGES}
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.4]{image_2023-05-11_13-17-23.pdf}\caption{An example of outfit complementary item retrieval. First row: partial outfit with a missing item (shoe). Second row: retrieved results using our method. }\label{figure1}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.7]{fig2.pdf}\caption{ Overview of our framework.
+ }\label{figure2}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.6]{fig3.pdf}\caption{Illustration of the proposed outfit ranking loss that considers the item relationship of the entire outfit.  }\label{figure3}
+\end{center}
+\end{figure}
+
+
+
+
+
+\section{TABLES}
+\begin{table}[H]
+\caption{Table with more complicated columns}\label{tab:1}%
+\begin{tabular}{!{\hspace*{0.5cm}} >{\raggedright\hangindent=1em} p{2cm} d{3} @{\hspace*{0.5cm}} d{3} !{\hspace*{0.5cm}}}
+\toprule
+Aggregation function & \multicolumn{1}{c@{\hspace*{0.5cm}}}{FITB Accuracy} & \multicolumn{1}{c!{\hspace*{0.5cm}}}{Compat. AUC} \\
+\midrule
+Average &	\multicolumn{1}{c@{\hspace*{0.5cm}}}{56.19/60} &	\multicolumn{1}{c@{\hspace*{0.5cm}}}{0.84/0.89} \\ 
+Min  & \multicolumn{1}{c@{\hspace*{0.5cm}}}{59.26/63.73} &	\multicolumn{1}{c@{\hspace*{0.5cm}}}{0.87/0.91} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+
+
+\section{FORMULES}
+
+The final embedding constructed by the network is a weighted sum of the subspace embeddings:
+\[
+    f = \sum\limits_{i=1}^k(x\bigodot{ m_i})\cdot{w_i}
+\]
+
+where k is the number of subspaces, x is the image feature vector after the base CNN, mi is a learnable mask, wi is an attention weight, and f is the final embedding. 
+The feature embeddings of each image in the outfit O are computed by:
+
+\[
+    f_i^o = \psi(I_i^o,c(I_i^o),c(I^p)); i = 1 \rightarrow  n,
+\]
+where Iio is an image in O, is our category-based subspace attention network, c(.) is a function that maps an input image to an one-hot category vector, c(Iio) is the source category vector for image Iio and c(Ip) is the target category vector from the positive image Ip.
+\[
+    D_{outfit} (O,s) = \frac{1}{n}\sum\limits_{i=1}^n d(f_i^o,f_i^s),
+\]
+
+\tableofcontents
+\newpage
+\end{document}
